@@ -1,6 +1,7 @@
 This is the graphql API that comes with portfolio-performance-front
 
 ---------------------------------------------------
+initial thoughts before coding :
 
 MVP ->
 
