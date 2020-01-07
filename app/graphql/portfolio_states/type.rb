@@ -3,4 +3,5 @@ PortfolioStates::Type = GraphQL::ObjectType.define do
   field :id, !types.String
   field :final_balance, !types.Int
   field :allocations, !types[!Allocations::Type]
+  field :token, types.String
 end
