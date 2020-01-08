@@ -1,7 +1,9 @@
 module PortfolioStates
   class Service < ApplicationService
 
-    def create 
+    def create
+      puts 'Creating Portfolio'
+      puts params
       if params[:save]
         p = PortfolioState.find_by(id: params[:token])
         p&.allocations&.destroy_all
@@ -24,7 +26,7 @@ module PortfolioStates
                                        price_per_times: [])
         tab[a['symbol']]['history'].map do |k, v|
           al_openstruct[:price_per_times] <<
-          OpenStruct.new(value: v['close'], time: k)
+            OpenStruct.new(value: v['close'], time: k)
         end
         p_openstruct.allocations << al_openstruct
       end
@@ -35,6 +37,8 @@ module PortfolioStates
     end
 
     def show
+      puts 'Retrieving Portfolio'
+      puts params
       p = PortfolioState.find_by(id: params[:id])
       p_openstruct = OpenStruct.new(final_balance: 0, allocations: [])
       tab = {}
