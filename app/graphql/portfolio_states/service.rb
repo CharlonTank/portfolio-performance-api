@@ -28,15 +28,11 @@ module PortfolioStates
 
     def create_open_struct_portfolio(allocations, initial_balance, start_date, token)
       tab = {}
-      p_openstruct = OpenStruct.new(final_balance: 0, allocations: [])
+      p_openstruct = OpenStruct.new(allocations: [])
       allocations.each do |a|
         tab[a['symbol']] = HTTParty.get("https://api.worldtradingdata.com/api/v1/history?symbol=#{a['symbol']}&date_from=#{start_date}&api_token=" + ENV['WORLD_TRADING_DATA_KEY'])
         next unless tab[a['symbol']]['Message'].blank?
 
-        first_close_value = tab[a['symbol']]['history'].values.first['close'].to_f
-        last_close_value = tab[a['symbol']]['history'].values.last['close'].to_f
-        p_openstruct[:final_balance] += initial_balance * a['percentage'] *
-                                        first_close_value / (100 * last_close_value)
         al_openstruct = OpenStruct.new(symbol: a['symbol'],
                                        percentage: a['percentage'],
                                        price_per_times: [])
